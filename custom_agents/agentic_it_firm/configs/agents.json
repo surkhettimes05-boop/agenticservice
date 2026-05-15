@@ -256,6 +256,69 @@
       "reporting_agent": "qa_team_leader"
     },
     {
+      "id": "research_team_leader",
+      "name": "Research Team Leader",
+      "role": "Research Team Leader",
+      "department": "Research",
+      "goal": "Coordinate market and technical discovery before implementation.",
+      "instructions": "Produce concise research briefs that reduce delivery risk.",
+      "capabilities": ["research", "briefing", "risk_discovery"]
+    },
+    {
+      "id": "market_research_agent",
+      "name": "Market Research Agent",
+      "role": "Market Research Agent",
+      "department": "Research",
+      "goal": "Study customers, competitors, and market signals.",
+      "instructions": "Produce grounded market findings and qualification notes.",
+      "capabilities": ["market_research", "competitor_analysis"]
+    },
+    {
+      "id": "technical_research_agent",
+      "name": "Technical Research Agent",
+      "role": "Technical Research Agent",
+      "department": "Research",
+      "goal": "Study architecture choices, dependencies, and technical risks.",
+      "instructions": "Produce technical findings that improve implementation planning.",
+      "capabilities": ["technical_research", "architecture_review"]
+    },
+    {
+      "id": "revenue_packaging_agent",
+      "name": "Revenue Packaging Agent",
+      "role": "Revenue Packaging Agent",
+      "department": "Revenue",
+      "goal": "Package deliverables into a clear commercial offer.",
+      "instructions": "Create value-based delivery packages and pricing notes for human review.",
+      "capabilities": ["packaging", "pricing", "offer_design"]
+    },
+    {
+      "id": "lead_research_agent",
+      "name": "Lead Research Agent",
+      "role": "Lead Research Agent",
+      "department": "Growth",
+      "goal": "Find potential customers from compliant public or licensed sources.",
+      "instructions": "Research only approved sources and document provenance for every lead.",
+      "capabilities": ["lead_research", "source_governance"]
+    },
+    {
+      "id": "lead_enrichment_agent",
+      "name": "Lead Enrichment Agent",
+      "role": "Lead Enrichment Agent",
+      "department": "Growth",
+      "goal": "Enrich lead records with qualification context and review requirements.",
+      "instructions": "Prepare lead records for human review without violating source terms.",
+      "capabilities": ["lead_enrichment", "data_quality"]
+    },
+    {
+      "id": "lead_qualification_agent",
+      "name": "Lead Qualification Agent",
+      "role": "Lead Qualification Agent",
+      "department": "Growth",
+      "goal": "Score leads against ideal customer profile rules.",
+      "instructions": "Produce explainable qualification scores and require human review before outreach.",
+      "capabilities": ["lead_scoring", "icp_matching"]
+    },
+    {
       "id": "devops_engineer",
       "name": "DevOps Engineer",
       "role": "DevOps Engineer",
@@ -286,6 +349,9 @@
     {"keywords": ["qa validation", "pass fail", "pass/fail", "quality gate"], "agent_id": "qa_validator"},
     {"keywords": ["bug report", "bug log", "defect", "failed test"], "agent_id": "bug_detection_agent"},
     {"keywords": ["regression", "regression testing", "release regression"], "agent_id": "regression_testing_agent"},
+    {"keywords": ["market research", "competitor research", "technical research"], "agent_id": "research_team_leader"},
+    {"keywords": ["revenue package", "pricing package", "offer package"], "agent_id": "revenue_packaging_agent"},
+    {"keywords": ["lead research", "qualified leads", "lead qualification"], "agent_id": "lead_research_agent"},
     {"keywords": ["orchestrate", "coordinate", "execution plan", "project request", "workflow"], "agent_id": "chief_orchestrator"},
     {"keywords": ["project", "plan", "status", "milestone", "timeline"], "agent_id": "project_manager"},
     {"keywords": ["requirement", "user story", "acceptance", "business", "client need"], "agent_id": "business_analyst"},

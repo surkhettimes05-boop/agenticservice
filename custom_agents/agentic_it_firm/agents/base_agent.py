@@ -11,6 +11,7 @@ from praisonaiagents import Agent
 from custom_agents.agentic_it_firm.configs.loader import AgentDefinition
 from custom_agents.agentic_it_firm.llm_config import LLMRequest, ModelManager
 from custom_agents.agentic_it_firm.memory.shared_memory import SharedMemory
+from custom_agents.agentic_it_firm.quality import AgentQualityEvaluator
 
 
 @dataclass(frozen=True)
@@ -54,6 +55,7 @@ class BaseAgent:
             instructions=definition.instructions,
             approval=False,
         )
+        self.quality_evaluator = AgentQualityEvaluator()
 
     @property
     def id(self) -> str:
@@ -172,10 +174,12 @@ class BaseAgent:
 
     def validate_response(self, output: str) -> dict[str, Any]:
         valid = bool(output.strip())
+        quality = self.quality_evaluator.evaluate(self.role, output)
         return {
             "valid": valid,
             "errors": [] if valid else ["Agent output is empty."],
             "requires_review": not valid or bool(self.reviewer_agent),
+            "quality": quality,
         }
 
     def format_output(

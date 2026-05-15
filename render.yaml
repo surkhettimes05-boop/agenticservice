@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: agenticservice
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: DASHBOARD_AUTH_SECRET
+        sync: false
+      - key: DASHBOARD_ADMIN_PASSWORD
+        sync: false
+      - key: DASHBOARD_DATABASE_URL
+        sync: false
+      - key: NVIDIA_NIM_API_KEY
+        sync: false
+      - key: NVIDIA_NIM_API_BASE
+        value: https://integrate.api.nvidia.com/v1
+      - key: NVIDIA_NIM_MODEL
+        value: meta/llama-3.1-70b-instruct

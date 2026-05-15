@@ -9,3 +9,4 @@ custom_agents/agentic_it_firm/outputs/*
 custom_agents/agentic_it_firm/memory/*.jsonl
 custom_agents/agentic_it_firm/memory/approval_queue.json
 agentic_dashboard.db
+*.db

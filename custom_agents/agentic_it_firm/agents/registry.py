@@ -9,6 +9,9 @@ from custom_agents.agentic_it_firm.agents.base import BaseFirmAgent
 from custom_agents.agentic_it_firm.agents.coding import CODING_AGENT_CLASSES
 from custom_agents.agentic_it_firm.agents.orchestrator import ChiefOrchestratorAgent
 from custom_agents.agentic_it_firm.agents.qa import QA_AGENT_CLASSES
+from custom_agents.agentic_it_firm.agents.research import RESEARCH_AGENT_CLASSES
+from custom_agents.agentic_it_firm.agents.revenue import REVENUE_AGENT_CLASSES
+from custom_agents.agentic_it_firm.agents.leads import LEAD_AGENT_CLASSES
 from custom_agents.agentic_it_firm.configs.loader import FirmConfig
 from custom_agents.agentic_it_firm.llm_config import ModelManager
 from custom_agents.agentic_it_firm.memory.shared_memory import SharedMemory
@@ -68,6 +71,30 @@ class AgentRegistry:
             )
         if definition.id in QA_AGENT_CLASSES:
             return QA_AGENT_CLASSES[definition.id](
+                definition=definition,
+                model_manager=manager,
+                dry_run=dry_run,
+                memory=memory,
+                logger=logger,
+            )
+        if definition.id in RESEARCH_AGENT_CLASSES:
+            return RESEARCH_AGENT_CLASSES[definition.id](
+                definition=definition,
+                model_manager=manager,
+                dry_run=dry_run,
+                memory=memory,
+                logger=logger,
+            )
+        if definition.id in REVENUE_AGENT_CLASSES:
+            return REVENUE_AGENT_CLASSES[definition.id](
+                definition=definition,
+                model_manager=manager,
+                dry_run=dry_run,
+                memory=memory,
+                logger=logger,
+            )
+        if definition.id in LEAD_AGENT_CLASSES:
+            return LEAD_AGENT_CLASSES[definition.id](
                 definition=definition,
                 model_manager=manager,
                 dry_run=dry_run,

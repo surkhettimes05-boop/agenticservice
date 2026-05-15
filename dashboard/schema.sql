@@ -23,3 +23,11 @@ CREATE TABLE IF NOT EXISTS taskrun (
 
 CREATE INDEX IF NOT EXISTS taskrun_created_at_idx ON taskrun (created_at DESC);
 CREATE INDEX IF NOT EXISTS taskrun_agent_id_idx ON taskrun (agent_id);
+
+CREATE TABLE IF NOT EXISTS "user" (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL
+);
