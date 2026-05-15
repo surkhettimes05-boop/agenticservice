@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentic IT Firm Console</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p>Operations Console</p>
+      <h1>Agentic IT Firm Console</h1>
+    </div>
+    <span>{{ agents|length }} agents online</span>
+  </header>
+
+  <main>
+    <section class="task-panel">
+      <h2>Submit Task</h2>
+      <form id="task-form">
+        <textarea name="prompt" placeholder="Describe the work you want the firm to do..." required></textarea>
+        <div class="controls">
+          <label><input type="checkbox" name="auto_approve" checked> Auto approve</label>
+          <label><input type="checkbox" name="dry_run" checked> Dry run</label>
+          <button type="submit">Run Task</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2>Agents</h2>
+      <div class="agent-grid">
+        {% for agent in agents %}
+        <article>
+          <strong>{{ agent.name }}</strong>
+          <span>{{ agent.department }}</span>
+          <small>{{ agent.role }}</small>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2>Recent Runs</h2>
+      <div id="runs">
+        {% for run in runs %}
+        <button class="run-row" data-run-id="{{ run.id }}">
+          <span>#{{ run.id }}</span>
+          <strong>{{ run.agent_id or "pending" }}</strong>
+          <em>{{ run.status }}</em>
+          <small>{{ run.prompt }}</small>
+        </button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2>Result</h2>
+      <pre id="result">Select a run to inspect its output.</pre>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

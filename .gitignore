@@ -1,0 +1,11 @@
+.env
+custom_agents/agentic_it_firm/.env
+__pycache__/
+*.pyc
+.pytest_cache/
+custom_agents/agentic_it_firm/logs/
+custom_agents/agentic_it_firm/outputs/*
+!custom_agents/agentic_it_firm/outputs/.gitkeep
+custom_agents/agentic_it_firm/memory/*.jsonl
+custom_agents/agentic_it_firm/memory/approval_queue.json
+agentic_dashboard.db

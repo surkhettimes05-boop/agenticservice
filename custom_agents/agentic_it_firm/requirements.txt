@@ -1,0 +1,5 @@
+praisonaiagents>=1.6.38
+python-dotenv>=1.2.2
+openai>=2.36.0
+psycopg[binary]>=3.3.2
+pytest>=9.0.3

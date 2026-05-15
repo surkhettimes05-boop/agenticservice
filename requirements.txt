@@ -1,0 +1,5 @@
+-r custom_agents/agentic_it_firm/requirements.txt
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+sqlmodel>=0.0.24
+jinja2>=3.1.6
