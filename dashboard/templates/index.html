@@ -56,6 +56,22 @@
     </section>
 
     <section>
+      <h2>MVP Workflow</h2>
+      <form id="workflow-form">
+        <textarea name="request" placeholder="Describe the client request..." required></textarea>
+        <button type="submit">Run MVP Workflow</button>
+      </form>
+      <pre id="workflow-result">No workflow run yet.</pre>
+    </section>
+
+    <section>
+      <h2>Lead Qualification</h2>
+      <textarea id="lead-json" placeholder='Paste lead JSON array here'></textarea>
+      <button id="qualify-leads" type="button">Qualify Leads</button>
+      <pre id="lead-result">No lead report yet.</pre>
+    </section>
+
+    <section>
       <h2>Result</h2>
       <pre id="result">Select a run to inspect its output.</pre>
     </section>

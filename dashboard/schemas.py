@@ -41,3 +41,28 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class MVPWorkflowCreate(BaseModel):
+    request: str
+
+
+class MVPWorkflowRead(BaseModel):
+    status: str
+    delivery_dir: str
+    completed_stages: list[str]
+
+
+class LeadCandidate(BaseModel):
+    company_name: str
+    website: str
+    industry: str
+    employee_count: int
+    signals: list[str] = []
+    source: str
+
+
+class LeadQualificationRequest(BaseModel):
+    ideal_industries: list[str]
+    min_employees: int = 1
+    leads: list[LeadCandidate]

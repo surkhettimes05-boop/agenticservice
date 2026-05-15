@@ -47,3 +47,22 @@ class LeadQualificationPipeline:
             "rejected_leads": rejected,
             "policy": "Use licensed or public sources only; human review is required before outreach.",
         }
+
+
+class PublicLeadSourceClient:
+    def __init__(self, search_client):
+        self.search_client = search_client
+
+    def search(self, query: str) -> list[dict]:
+        results = self.search_client(query)
+        return [
+            {
+                "company_name": item["title"],
+                "website": item["url"],
+                "industry": "",
+                "employee_count": 0,
+                "signals": [item.get("snippet", "")],
+                "source": "public_web_search",
+            }
+            for item in results
+        ]

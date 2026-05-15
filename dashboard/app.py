@@ -10,8 +10,22 @@ from fastapi.templating import Jinja2Templates
 
 from dashboard.database import create_db_engine, init_db
 from dashboard.auth import AuthService
-from dashboard.schemas import AgentRead, LoginRequest, TaskCreate, TaskRunRead, TokenResponse
+from dashboard.schemas import (
+    AgentRead,
+    LeadQualificationRequest,
+    LoginRequest,
+    MVPWorkflowCreate,
+    MVPWorkflowRead,
+    TaskCreate,
+    TaskRunRead,
+    TokenResponse,
+)
 from dashboard.service import DashboardService
+from custom_agents.agentic_it_firm.agents.leads import LeadQualificationPipeline
+from custom_agents.agentic_it_firm.workflows.mvp_workflow import MVPWorkflow
+from fastapi.responses import PlainTextResponse
+import csv
+import io
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -22,6 +36,7 @@ def create_app(
     dry_run_default: bool = True,
     auth_secret: str | None = None,
     bootstrap_admin_password: str = "admin",
+    deliveries_root: str | Path = "deliveries",
 ) -> FastAPI:
     app = FastAPI(title="Agentic IT Firm Console")
     engine = create_db_engine(database_url)
@@ -33,6 +48,7 @@ def create_app(
     templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
     app.state.service = service
     app.state.auth = auth
+    app.state.deliveries_root = Path(deliveries_root)
     app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
     def get_service() -> DashboardService:
@@ -78,6 +94,41 @@ def create_app(
         if app.state.auth is not None:
             app.state.auth.require_user(request.headers.get("authorization"))
         return dashboard.run_task(payload.prompt, auto_approve=payload.auto_approve, dry_run=payload.dry_run)
+
+    @app.post("/api/workflows/mvp", response_model=MVPWorkflowRead, status_code=status.HTTP_201_CREATED)
+    def run_mvp(payload: MVPWorkflowCreate, request: Request):
+        if app.state.auth is not None:
+            app.state.auth.require_user(request.headers.get("authorization"))
+        result = MVPWorkflow.local(app.state.deliveries_root, dry_run=True, auto_approve=True).run(payload.request)
+        return MVPWorkflowRead(
+            status=result.status,
+            delivery_dir=str(result.delivery_dir),
+            completed_stages=result.state.completed_stages,
+        )
+
+    @app.post("/api/leads/qualify")
+    def qualify_leads(payload: LeadQualificationRequest, request: Request):
+        if app.state.auth is not None:
+            app.state.auth.require_user(request.headers.get("authorization"))
+        return LeadQualificationPipeline().qualify(
+            [lead.model_dump() for lead in payload.leads],
+            ideal_industries=payload.ideal_industries,
+            min_employees=payload.min_employees,
+        )
+
+    @app.post("/api/leads/export", response_class=PlainTextResponse)
+    def export_leads(payload: dict, request: Request):
+        if app.state.auth is not None:
+            app.state.auth.require_user(request.headers.get("authorization"))
+        buffer = io.StringIO()
+        writer = csv.DictWriter(
+            buffer,
+            fieldnames=["company_name", "website", "industry", "employee_count", "score", "recommended_action"],
+        )
+        writer.writeheader()
+        for lead in payload.get("qualified_leads", []):
+            writer.writerow({key: lead.get(key, "") for key in writer.fieldnames})
+        return buffer.getvalue()
 
     return app
 

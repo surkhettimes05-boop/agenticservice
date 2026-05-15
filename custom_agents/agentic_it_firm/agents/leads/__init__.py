@@ -1,4 +1,10 @@
-from .lead_agents import LeadEnrichmentAgent, LeadQualificationAgent, LeadQualificationPipeline, LeadResearchAgent
+from .lead_agents import (
+    LeadEnrichmentAgent,
+    LeadQualificationAgent,
+    LeadQualificationPipeline,
+    LeadResearchAgent,
+    PublicLeadSourceClient,
+)
 
 LEAD_AGENT_CLASSES = {
     "lead_research_agent": LeadResearchAgent,
@@ -11,5 +17,6 @@ __all__ = [
     "LeadQualificationAgent",
     "LeadQualificationPipeline",
     "LeadResearchAgent",
+    "PublicLeadSourceClient",
     "LEAD_AGENT_CLASSES",
 ]
